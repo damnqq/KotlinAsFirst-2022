@@ -90,7 +90,8 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double = TODO()
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double =
+    sqrt(sqr(x1 - x2) + sqr(y1 - y2))
 
 /**
  * Простая (2 балла)
@@ -117,11 +118,12 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Сколько денег будет на счету через 3 года (с учётом сложных процентов)?
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
-fun accountInThreeYears(initial: Int, percent: Int): Double =
-    (initial + percent / 100.0 * initial) + (percent / 100.0 * (initial + percent / 100.0 * initial)) +
-            (percent / 100.0 * ((initial + percent / 100.0 * initial) +
-                    (percent / 100.0 * (initial + percent / 100.0 * initial))))
+fun accountInThreeYears(initial: Int, percent: Int): Double {
+    val end = initial + percent / 100.0 * initial
+    val p = percent / 100.0
+    return end + p * end + (p * (end + p * end))
 
+}
 /**
  * Простая (2 балла)
  *
