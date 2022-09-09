@@ -68,8 +68,16 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
-    //if (age < 10 && age == 1) "$age год" else
+fun ageDescription(age: Int): String {
+    val lastDigit = age % 10
+    val last2Digits = age % 100
+    if (last2Digits in 10 .. 20) return "$age лет"
+    if (lastDigit == 0) return "$age лет"
+    if (lastDigit == 1) return "$age год"
+    if (lastDigit in 2 .. 4) return "$age года"
+    if (lastDigit in 5 .. 9) return "$age лет"
+    return "Ошибка"
+}
 
 /**
  * Простая (2 балла)
@@ -97,11 +105,16 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    if ((rookX1 != kingX && rookY1 != kingY) && (rookX2 != kingX && rookY2 != kingY)) return 0
+    if ((rookX1 == kingX || rookY1 == kingY) && (rookX2 != kingX && rookY2 !=kingY)) return 1
+    if ((rookX2 == kingX || rookY2 == kingY) && (rookX1 != kingX && rookY1 != kingY)) return 2
+    else return 3
+}
 
 /**
  * Простая (2 балла)
- *
+ * *
  * На шахматной доске стоят черный король и белые ладья и слон
  * (ладья бьет по горизонтали и вертикали, слон — по диагоналям).
  * Проверить, есть ли угроза королю и если есть, то от кого именно.
@@ -109,6 +122,7 @@ fun whichRookThreatens(
  * и 3, если угроза есть и от ладьи и от слона.
  * Считать, что ладья и слон не могут загораживать друг друга.
  */
+
 fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
@@ -133,4 +147,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    if ((a in c .. d) && (b in c .. d)) return (b - a)
+    if ((c in a .. b) && (d !in a .. b)) return (b - c)
+    if ((a in c .. d) && (b !in c .. d)) return (d - a)
+    if ((b in c .. d) && (a !in c .. d)) return (b - c)
+    if ((c in a.. b) && (d in a .. b)) return (d - c)
+    else return -1
+}
+
