@@ -2,6 +2,9 @@
 
 package lesson3.task1
 
+import ru.spbstu.kotlin.generate.combinators.shrinkIterable
+import kotlin.math.PI
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 // Урок 3: циклы
@@ -17,7 +20,7 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
@@ -72,7 +75,16 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var number = n
+    if (n < 10) return 1
+    while (number > 0) {
+        count++
+        number /= 10
+    }
+    return (count)
+}
 
 /**
  * Простая (2 балла)
@@ -80,21 +92,37 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int = if (n <= 2) 1 else fib(n - 1) + fib(n - 2)
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    for (i in 2..sqrt(n.toDouble()).toInt()) {
+        if (n % i == 0) {
+            return i
+            break
+        }
+    }
+    return n
+}
 
 /**
  * Простая (2 балла)
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    for (i in 2..sqrt(n.toDouble()).toInt()){
+        if (n % i == 0){
+            return n / i
+            break
+        }
+    }
+    return 1
+}
 
 /**
  * Простая (2 балла)
@@ -159,7 +187,16 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var number = n
+    val lastDigit = n % 10
+    if (n < 10) return false
+    while (number > 0) {
+        if (lastDigit != number % 10) return true
+        number /= 10
+    }
+    return false
+}
 
 /**
  * Средняя (4 балла)
@@ -170,7 +207,19 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.sin и другие стандартные реализации функции синуса в этой задаче запрещается.
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    var a = 0.0
+    if ((x / PI) % 2 == 0.0) return 0.0 else {
+        for (i in 1..10000000 step 4) {
+            val firstEl = x.pow(i) / factorial(i)
+            val secondEl = x.pow(i + 2) / factorial(i + 2)
+            val sin = firstEl - secondEl
+            a += sin
+            if (firstEl < eps || secondEl < eps) return a
+        }
+    }
+    return 0.0
+}
 
 /**
  * Средняя (4 балла)
@@ -188,11 +237,12 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Найти n-ю цифру последовательности из квадратов целых чисел:
  * 149162536496481100121144...
- * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
+ * Например, 2-я цифра равна 4, 7-я 5,  12-я 6.
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun squareSequenceDigit(n: Int): Int = TODO()
+
 
 /**
  * Сложная (5 баллов)

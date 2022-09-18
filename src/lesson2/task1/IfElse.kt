@@ -71,12 +71,14 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
 fun ageDescription(age: Int): String {
     val lastDigit = age % 10
     val last2Digits = age % 100
-    if (last2Digits in 10 .. 20) return "$age лет"
-    if (lastDigit == 0) return "$age лет"
-    if (lastDigit == 1) return "$age год"
-    if (lastDigit in 2 .. 4) return "$age года"
-    if (lastDigit in 5 .. 9) return "$age лет"
-    return "Ошибка"
+    return when {
+        last2Digits in 10 .. 20 -> "$age лет"
+        lastDigit == 0 -> "$age лет"
+        lastDigit == 1 -> "$age год"
+        lastDigit in 2 .. 4 -> "$age года"
+        lastDigit in 5 .. 9 -> "$age лет"
+        else -> "Ошибка"
+    }
 }
 
 /**
@@ -106,10 +108,12 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    if ((rookX1 != kingX && rookY1 != kingY) && (rookX2 != kingX && rookY2 != kingY)) return 0
-    if ((rookX1 == kingX || rookY1 == kingY) && (rookX2 != kingX && rookY2 !=kingY)) return 1
-    if ((rookX2 == kingX || rookY2 == kingY) && (rookX1 != kingX && rookY1 != kingY)) return 2
-    else return 3
+    return when {
+        (rookX1 != kingX && rookY1 != kingY) && (rookX2 != kingX && rookY2 != kingY) -> 0
+        (rookX1 == kingX || rookY1 == kingY) && (rookX2 != kingX && rookY2 !=kingY) -> 1
+        (rookX2 == kingX || rookY2 == kingY) && (rookX1 != kingX && rookY1 != kingY) -> 2
+        else -> 3
+    }
 }
 
 /**
@@ -148,11 +152,13 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    if ((a in c .. d) && (b in c .. d)) return (b - a)
-    if ((c in a .. b) && (d !in a .. b)) return (b - c)
-    if ((a in c .. d) && (b !in c .. d)) return (d - a)
-    if ((b in c .. d) && (a !in c .. d)) return (b - c)
-    if ((c in a.. b) && (d in a .. b)) return (d - c)
-    else return -1
+    return when {
+        (a in c .. d) && (b in c .. d) -> (b - a)
+        (c in a .. b) && (d !in a .. b) -> (b - c)
+        (a in c .. d) && (b !in c .. d) -> (d - a)
+        (b in c .. d) && (a !in c .. d) -> (b - c)
+        (c in a.. b) && (d in a .. b) -> (d - c)
+        else -> -1
+    }
 }
 
