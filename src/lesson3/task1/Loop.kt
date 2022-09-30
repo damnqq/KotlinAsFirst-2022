@@ -4,6 +4,7 @@ package lesson3.task1
 
 import ru.spbstu.kotlin.generate.combinators.shrinkIterable
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -78,8 +79,8 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var number = n
-    if (n < 10) return 1
-    while (number > 0) {
+    if (abs(number) < 10) return 1
+    while (abs(number) > 0) {
         count++
         number /= 10
     }
@@ -92,7 +93,17 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = if (n <= 2) 1 else fib(n - 1) + fib(n - 2)
+fun fib(n: Int): Int {
+    var cur_fib = 0
+    var fib_1 = 1
+    var fib_2 = 1
+    for (i in 3..n) {
+        cur_fib = fib_1 + fib_2
+        fib_1 = fib_2
+        fib_2 = cur_fib
+    }
+    if (n == 1 || n == 2) return 1 else return cur_fib
+}
 
 /**
  * Простая (2 балла)
@@ -103,7 +114,6 @@ fun minDivisor(n: Int): Int {
     for (i in 2..sqrt(n.toDouble()).toInt()) {
         if (n % i == 0) {
             return i
-            break
         }
     }
     return n
@@ -118,7 +128,6 @@ fun maxDivisor(n: Int): Int {
     for (i in 2..sqrt(n.toDouble()).toInt()){
         if (n % i == 0){
             return n / i
-            break
         }
     }
     return 1
@@ -209,13 +218,14 @@ fun hasDifferentDigits(n: Int): Boolean {
  */
 fun sin(x: Double, eps: Double): Double {
     var a = 0.0
-    if ((x / PI) % 2 == 0.0) return 0.0 else {
+    var number = x
+    if ((number / PI) % 2 == 0.0) return 0.0 else {
         for (i in 1..10000000 step 4) {
-            val firstEl = x.pow(i) / factorial(i)
-            val secondEl = x.pow(i + 2) / factorial(i + 2)
+            val firstEl = number.pow(i) / factorial(i)
+            val secondEl = number.pow(i + 2) / factorial(i + 2)
             val sin = firstEl - secondEl
             a += sin
-            if (firstEl < eps || secondEl < eps) return a
+            if (abs(firstEl) < eps || abs(secondEl) < eps) return a
         }
     }
     return 0.0
