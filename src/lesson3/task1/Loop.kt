@@ -3,10 +3,7 @@
 package lesson3.task1
 
 import ru.spbstu.kotlin.generate.combinators.shrinkIterable
-import kotlin.math.PI
-import kotlin.math.abs
-import kotlin.math.pow
-import kotlin.math.sqrt
+import kotlin.math.*
 
 // Урок 3: циклы
 // Максимальное количество баллов = 9
@@ -166,7 +163,12 @@ fun lcm(m: Int, n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    for (i in 2..max(m, n)) {
+        if (n % i == 0 && m % i == 0) return false
+    }
+    return true
+}
 
 /**
  * Средняя (3 балла)
@@ -258,7 +260,7 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * Сложная (5 баллов)
  *
  * Найти n-ю цифру последовательности из чисел Фибоначчи (см. функцию fib выше):
- * 1123581321345589144...
+ * 1 1 2 3 5 8 13 21 34 55 89 144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  *
  * Использовать операции со строками в этой задаче запрещается.
