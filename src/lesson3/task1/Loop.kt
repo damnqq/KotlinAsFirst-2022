@@ -240,7 +240,19 @@ fun sin(x: Double, eps: Double): Double {
  * Подумайте, как добиться более быстрой сходимости ряда при больших значениях x.
  * Использовать kotlin.math.cos и другие стандартные реализации функции косинуса в этой задаче запрещается.
  */
-fun cos(x: Double, eps: Double): Double = TODO()
+fun cos(x: Double, eps: Double): Double {
+    val number = x % (2 * PI)
+    var degree = 0
+    var a = 0.0
+    while (true) {
+        val firstEl = number.pow(degree) / factorial(degree)
+        val secondEl = number.pow(degree + 2) / factorial(degree + 2)
+        val cos = firstEl - secondEl
+        a += cos
+        degree += 4
+        if (abs(firstEl) < eps || abs(secondEl) < eps) return a
+    }
+}
 
 /**
  * Сложная (4 балла)
