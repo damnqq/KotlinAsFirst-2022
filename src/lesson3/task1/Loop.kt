@@ -2,7 +2,6 @@
 
 package lesson3.task1
 
-import ru.spbstu.kotlin.generate.combinators.shrinkIterable
 import kotlin.math.*
 
 // Урок 3: циклы
@@ -91,15 +90,15 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var cur_fib = 0
-    var fib_1 = 1
-    var fib_2 = 1
+    var curFib = 0
+    var fib1 = 1
+    var fib2 = 1
     for (i in 3..n) {
-        cur_fib = fib_1 + fib_2
-        fib_1 = fib_2
-        fib_2 = cur_fib
+        curFib = fib1 + fib2
+        fib1 = fib2
+        fib2 = curFib
     }
-    if (n == 1 || n == 2) return 1 else return cur_fib
+    return if (n == 1 || n == 2) 1 else curFib
 }
 
 /**
@@ -220,17 +219,16 @@ fun hasDifferentDigits(n: Int): Boolean {
  */
 fun sin(x: Double, eps: Double): Double {
     var a = 0.0
-    var number = x
-    if ((number / PI) % 2 == 0.0) return 0.0 else {
-        for (i in 1..10000000 step 4) {
-            val firstEl = number.pow(i) / factorial(i)
-            val secondEl = number.pow(i + 2) / factorial(i + 2)
-            val sin = firstEl - secondEl
-            a += sin
-            if (abs(firstEl) < eps || abs(secondEl) < eps) return a
-        }
+    val number = x % (2 * PI)
+    var degree = 1
+    while (true) {
+        val firstEl = number.pow(degree) / factorial(degree)
+        val secondEl = number.pow(degree + 2) / factorial(degree + 2)
+        val sin = firstEl - secondEl
+        a += sin
+        degree += 4
+        if (abs(firstEl) < eps || abs(secondEl) < eps) return a
     }
-    return 0.0
 }
 
 /**
@@ -266,3 +264,4 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
+// добавлять в список все цифры из чисел фибоначчи, после чего выводить искомую цифру через list[n - 1]
