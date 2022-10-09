@@ -236,7 +236,15 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var number = n
+    val ans = mutableListOf<Int>()
+    while (number > 0) {
+        ans.add(number % base)
+        number /= base
+    }
+    return ans.reversed()
+}
 
 /**
  * Сложная (4 балла)
@@ -249,7 +257,19 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    val alf = "abcdefghijklmnopqrstuvwxyz"
+    var ans = ""
+    var number = n
+    while (number > 0) {
+        val digit = number % base
+        if (digit > 9) {
+            ans += alf[digit - 10]
+        } else ans += digit
+        number /= base
+    }
+    return ans.reversed()
+}
 
 /**
  * Средняя (3 балла)
@@ -258,7 +278,13 @@ fun convertToString(n: Int, base: Int): String = TODO()
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var ans = 0
+    for (i in 0 until digits.size) {
+        ans += digits[i] * (base.toDouble().pow(digits.size - i - 1).toInt())
+    }
+    return ans
+}
 
 /**
  * Сложная (4 балла)
@@ -272,7 +298,24 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, str.toInt(base)), запрещается.
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimalFromString(str: String, base: Int): Int {
+    var ans = 0
+    val digits = mutableListOf<String>()
+    val alf = "abcdefghijklmnopqrstuvwxyz"
+    for (i in 0 until str.length) {
+        if (str[i] in alf) {
+            for (j in 0 until alf.length) {
+                if (str[i] == alf[j]) {
+                    digits.add((j + 10).toString())
+                }
+            }
+        } else digits.add(str[i].toString())
+    }
+    for (i in 0 until digits.size) {
+        ans += digits[i].toInt() * (base.toDouble().pow(digits.size - i - 1).toInt())
+    }
+    return ans
+}
 
 /**
  * Сложная (5 баллов)
