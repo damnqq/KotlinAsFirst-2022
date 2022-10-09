@@ -258,6 +258,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
+    if (n == 0) return "0"
     val alf = "abcdefghijklmnopqrstuvwxyz"
     var ans = ""
     var number = n
