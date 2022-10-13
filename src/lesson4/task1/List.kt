@@ -130,13 +130,9 @@ fun abs(v: List<Double>): Double = TODO()
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    var ans = 0.0
     return if (list.isNotEmpty()) {
-        for (element in list) {
-            ans += element
-        }
-        ans / list.size
-    } else ans
+        list.sum() / list.size
+    } else 0.0
 }
 
 /**
@@ -193,11 +189,8 @@ fun polynom(p: List<Int>, x: Int): Int {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-    var sum = 0
     for (i in 1 until list.size) {
-        for (j in 0 until i) {
-            sum = list[i] + list[j]
-        }
+        val sum = list[i] + list[i - 1]
         list[i] = sum
     }
     return list
@@ -298,11 +291,7 @@ fun decimalFromString(str: String, base: Int): Int {
     val alf = "abcdefghijklmnopqrstuvwxyz"
     for (i in 0 until str.length) {
         if (str[i] in alf) {
-            for (j in 0 until alf.length) {
-                if (str[i] == alf[j]) {
-                    digits.add((j + 10).toString())
-                }
-            }
+            digits.add((alf.indexOf(str[i]) + 10).toString())
         } else digits.add(str[i].toString())
     }
     for (i in 0 until digits.size) {
