@@ -12,6 +12,7 @@ import kotlin.math.sqrt
 // Рекомендуемое количество баллов = 8
 // Вместе с предыдущими уроками = 24/33
 
+
 /**
  * Пример
  *
@@ -246,16 +247,16 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     if (n == 0) return "0"
     val alf = "abcdefghijklmnopqrstuvwxyz"
-    var ans = ""
+    val ans = StringBuilder()
     var number = n
     while (number > 0) {
         val digit = number % base
         if (digit > 9) {
-            ans += alf[digit - 10]
-        } else ans += digit
+            ans.append(alf[digit - 10])
+        } else ans.append(digit)
         number /= base
     }
-    return ans.reversed()
+    return ans.toString().reversed()
 }
 
 /**
@@ -291,7 +292,7 @@ fun decimalFromString(str: String, base: Int): Int {
     val alf = "abcdefghijklmnopqrstuvwxyz"
     for (i in 0 until str.length) {
         if (str[i] in alf) {
-            digits.add((alf.indexOf(str[i]) + 10).toString())
+            digits.add((str[i].code - 87).toString())
         } else digits.add(str[i].toString())
     }
     for (i in 0 until digits.size) {
