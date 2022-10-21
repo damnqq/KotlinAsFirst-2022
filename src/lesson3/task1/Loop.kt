@@ -122,7 +122,7 @@ fun minDivisor(n: Int): Int {
  */
 fun maxDivisor(n: Int): Int {
     for (i in 2..sqrt(n.toDouble()).toInt()) {
-        if (n % i == 0){
+        if (n % i == 0) {
             return n / i
         }
     }
@@ -278,4 +278,3 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun fibSequenceDigit(n: Int): Int = TODO()
-// добавлять в список все цифры из чисел фибоначчи, после чего выводить искомую цифру через list[n - 1]

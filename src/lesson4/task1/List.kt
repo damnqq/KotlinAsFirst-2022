@@ -130,11 +130,7 @@ fun abs(v: List<Double>): Double = TODO()
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double {
-    return if (list.isNotEmpty()) {
-        list.sum() / list.size
-    } else 0.0
-}
+fun mean(list: List<Double>): Double = if (list.isNotEmpty()) list.sum() / list.size else 0.0
 
 /**
  * Средняя (3 балла)
@@ -169,15 +165,7 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int {
-    return if (p.isNotEmpty()) {
-        var ans = p[0]
-        for (i in 1 until p.size) {
-            ans += p[i] * x.toDouble().pow(i).toInt()
-        }
-        ans
-    } else 0
-}
+fun polynom(p: List<Int>, x: Int): Int = p.sumOf { it * x.toDouble().pow(p.indexOf(it)).toInt() }
 
 /**
  * Средняя (3 балла)
@@ -291,9 +279,9 @@ fun decimalFromString(str: String, base: Int): Int {
     val digits = mutableListOf<String>()
     val alf = "abcdefghijklmnopqrstuvwxyz"
     for (i in 0 until str.length) {
-        if (str[i] in alf) {
-            digits.add((str[i].code - 87).toString())
-        } else digits.add(str[i].toString())
+        if (str[i].isDigit()) {
+            digits.add(str[i].toString())
+        } else digits.add((str[i].code - (str[i].code - (alf.indexOf(str[i]) + 10))).toString())
     }
     for (i in 0 until digits.size) {
         ans += digits[i].toInt() * (base.toDouble().pow(digits.size - i - 1).toInt())
