@@ -281,7 +281,7 @@ fun decimalFromString(str: String, base: Int): Int {
     for (i in 0 until str.length) {
         if (str[i].isDigit()) {
             digits.add(str[i].toString())
-        } else digits.add((str[i].code - (str[i].code - (alf.indexOf(str[i]) + 10))).toString())
+        } else digits.add((str[i] - 'a' + 10).toString())
     }
     for (i in 0 until digits.size) {
         ans += digits[i].toInt() * (base.toDouble().pow(digits.size - i - 1).toInt())
