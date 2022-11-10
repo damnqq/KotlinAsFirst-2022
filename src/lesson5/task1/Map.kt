@@ -2,6 +2,7 @@
 
 package lesson5.task1
 
+import ru.spbstu.wheels.NullableMonad.filter
 import ru.spbstu.wheels.toMutableMap
 
 // Урок 5: ассоциативные массивы и множества
@@ -182,6 +183,8 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
     val ans = mutableMapOf<String, String>()
+    if (mapA.isEmpty()) ans.putAll(mapB)
+    if (mapB.isEmpty()) ans.putAll(mapA)
     for ((nameA, phoneNumberA) in mapA) {
         for ((nameB, phoneNumberB) in mapB) {
             if (nameB !in mapA) ans.put(nameB, phoneNumberB)
@@ -193,8 +196,6 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
                 ans.put(nameA, phoneNumberA)
                 continue
             }
-            if (mapA.isEmpty()) ans.putAll(mapB)
-            if (mapB.isEmpty()) ans.putAll(mapA)
         }
     }
     return ans
@@ -250,14 +251,9 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
             suitableNames.put(name, type.second)
         }
     }
-    var minim = 1000000000000000000
-    for ((name, cost) in suitableNames) {
-        if (cost < minim) minim = cost.toInt().toLong()
-    }
-    for ((name, cost) in suitableNames) {
-        if (cost == minim.toDouble()) return name
-    }
-    return null
+    if (suitableNames.isEmpty()) return null
+    val minim = suitableNames.minBy { it.value }
+    return minim.key
 }
 /**
  * Средняя (3 балла)
