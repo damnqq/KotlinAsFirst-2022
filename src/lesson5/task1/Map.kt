@@ -112,6 +112,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
 fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
+    if (a.isEmpty() && b.isNotEmpty()) return true
     if (a.isEmpty() && b.isEmpty()) return true
     for ((key_a, value_a) in a) {
         for ((key_b, value_b) in b) {
@@ -192,6 +193,8 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
                 ans.put(nameA, phoneNumberA)
                 continue
             }
+            if (mapA.isEmpty()) ans.putAll(mapB)
+            if (mapB.isEmpty()) ans.putAll(mapA)
         }
     }
     return ans
@@ -218,9 +221,9 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
                 summa += price
                 counter += 1
             }
-            val averageCost = summa / counter
-            averageStockPrices[currentName] = averageCost
         }
+        val averageCost = summa / counter
+        averageStockPrices[currentName] = averageCost
     }
     return averageStockPrices
 }
@@ -247,9 +250,9 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
             suitableNames.put(name, type.second)
         }
     }
-    var minim = 100000000
+    var minim = 1000000000000000000
     for ((name, cost) in suitableNames) {
-        if (cost < minim) minim = cost.toInt()
+        if (cost < minim) minim = cost.toInt().toLong()
     }
     for ((name, cost) in suitableNames) {
         if (cost == minim.toDouble()) return name
