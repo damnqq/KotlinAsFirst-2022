@@ -121,7 +121,41 @@ fun dateStrToDigit(str: String): String {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    var ans = ""
+    val months = mapOf<String, String>(
+        "01" to "января", "02" to "февраля",
+        "03" to "марта", "04" to "апреля", "05" to "мая",
+        "06" to "июня", "07" to "июля",
+        "08" to "августа",
+        "09" to "сентября", "10" to "октября", "11" to "ноября", "12" to "декабря"
+    )
+    val month2 = mapOf<Int, List<String>>(
+        31 to listOf<String>("января", "марта", "мая", "июля", "августа", "октября", "декабря")
+    )
+    try {
+        val parts = digital.split(".")
+        val day = parts[0].toInt()
+        val month = months[parts[1]]
+        val year = parts[2].toInt()
+        if (parts.size > 3) return ""
+        if (month == "февраля" && day > 29) return ""
+        if ((day <= 31)) {
+            if (month2.containsKey(day) && month !in month2[day]!!) return ""
+            if (day == 29 && (month == "февраля")
+                && !(year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) return ""
+            ans += "$day "
+            //if (day in 0..9) ans += "0$day " else ans += "$day "
+            if (months.containsKey(parts[1])) ans += "$month " else return ""
+            ans += year
+            return ans
+        } else return ""
+    } catch (e: NumberFormatException) {
+        return ""
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+}
 
 /**
  * Средняя (4 балла)
