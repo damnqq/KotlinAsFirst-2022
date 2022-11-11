@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson4.task1.isPalindrome
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +76,36 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    var ans = ""
+    val months = mutableMapOf<String, String>(
+        "января" to "01.", "февраля" to "02.",
+        "марта" to "03.", "апреля" to "04.", "мая" to "05.",
+        "июня" to "06.", "июля" to "07.",
+        "августа" to "08.",
+        "сентября" to "09.", "октября" to "10.", "ноября" to "11.", "декабря" to "12.",
+    )
+    try {
+        val parts = str.split(" ")
+        val day = parts[0].toInt()
+        val month = parts[1]
+        val year = parts[2].toInt()
+        if (month == "февраля" && day > 29) return ""
+        if ((day <= 31)) {
+            if (day == 29 && (month == "февраля")
+                && !(year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) return ""
+            if (day in 0..9) ans += "0$day." else ans += "$day."
+            if (months.containsKey(month)) ans += months[month] else return ""
+            ans += year
+            return ans
+        } else return ""
+    } catch (e: NumberFormatException) {
+        return ""
+    } catch (e: IndexOutOfBoundsException) {
+        return ""
+    }
+}
+
 
 /**
  * Средняя (4 балла)
@@ -176,7 +207,6 @@ fun mostExpensive(description: String): String = TODO()
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int = TODO()
-
 /**
  * Очень сложная (7 баллов)
  *
