@@ -78,12 +78,16 @@ fun main() {
  */
 fun dateStrToDigit(str: String): String {
     var ans = ""
-    val months = mutableMapOf<String, String>(
+    val months = mapOf<String, String>(
         "января" to "01.", "февраля" to "02.",
         "марта" to "03.", "апреля" to "04.", "мая" to "05.",
         "июня" to "06.", "июля" to "07.",
         "августа" to "08.",
-        "сентября" to "09.", "октября" to "10.", "ноября" to "11.", "декабря" to "12.",
+        "сентября" to "09.", "октября" to "10.", "ноября" to "11.", "декабря" to "12."
+    )
+    val month2 = mapOf<Int, List<String>>(
+        30 to listOf<String>("апреля", "июня", "сентября", "ноября"),
+        31 to listOf<String>("января", "марта", "мая", "июля", "августа", "октября", "декабря")
     )
     try {
         val parts = str.split(" ")
@@ -92,6 +96,7 @@ fun dateStrToDigit(str: String): String {
         val year = parts[2].toInt()
         if (month == "февраля" && day > 29) return ""
         if ((day <= 31)) {
+            if (month2.containsKey(day) && month !in month2[day]!!) return ""
             if (day == 29 && (month == "февраля")
                 && !(year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) return ""
             if (day in 0..9) ans += "0$day." else ans += "$day."
