@@ -91,7 +91,6 @@ fun dateStrToDigit(str: String): String {
         val month = parts[1]
         val year = parts[2].toInt()
         if (month == "февраля" && day > 29) return ""
-        if (year.toString().length < 4) return ""
         if ((day <= 31)) {
             if (day == 29 && (month == "февраля")
                 && !(year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) return ""
