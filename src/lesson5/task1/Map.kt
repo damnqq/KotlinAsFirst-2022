@@ -10,6 +10,7 @@ import ru.spbstu.wheels.toMutableMap
 // Рекомендуемое количество баллов = 9
 // Вместе с предыдущими уроками = 33/47
 
+
 /**
  * Пример
  *
@@ -344,8 +345,10 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
-    for (i in list.indices) {
-        if (number - list[i] in list && number - list[i] != list[i]) return Pair(i, list.indexOf(number - list[i]))
+    val index = mutableMapOf<Int, Int>()
+    for (i in 0 until list.size) {
+        if (list[i] in index) return Pair(index.get(list[i])!!, i)
+        index[number - list[i]] = i
     }
     return Pair(-1, -1)
 }
