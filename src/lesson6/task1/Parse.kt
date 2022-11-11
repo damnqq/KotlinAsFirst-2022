@@ -86,7 +86,6 @@ fun dateStrToDigit(str: String): String {
         "сентября" to "09.", "октября" to "10.", "ноября" to "11.", "декабря" to "12."
     )
     val month2 = mapOf<Int, List<String>>(
-        30 to listOf<String>("апреля", "июня", "сентября", "ноября"),
         31 to listOf<String>("января", "марта", "мая", "июля", "августа", "октября", "декабря")
     )
     try {
