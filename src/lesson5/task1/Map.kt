@@ -255,7 +255,12 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    for (el in word) {
+        if (el !in chars) return false
+    }
+    return true
+}
 
 /**
  * Средняя (4 балла)
@@ -338,7 +343,14 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    for (i in list.indices) {
+        if (number - list[i] in list && number - list[i] != list[i]) return Pair(i, list.indexOf(number - list[i]))
+    }
+    return Pair(-1, -1)
+}
+
+
 
 /**
  * Очень сложная (8 баллов)
