@@ -3,6 +3,9 @@
 package lesson6.task1
 
 import lesson4.task1.isPalindrome
+import ru.spbstu.wheels.defaultCompareTo
+import kotlin.math.max
+import kotlin.reflect.typeOf
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -184,6 +187,7 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  */
 fun bestLongJump(jumps: String): Int = TODO()
 
+
 /**
  * Сложная (6 баллов)
  *
@@ -217,7 +221,21 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+// Яблоко упало на ветку с ветки оно упало на на землю
+fun firstDuplicateIndex(str: String): Int {
+    try {
+        var copyStr = str
+        val string = str.split(" ")
+        for (i in string.indices) {
+            val index = str.indexOf(string[i])
+            if (string[i].lowercase() == string[i + 1].lowercase()) return index
+
+        }
+        return -1
+    } catch (e: IndexOutOfBoundsException) {
+        return -1
+    }
+}
 
 /**
  * Сложная (6 баллов)
@@ -230,7 +248,21 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    //if (!Regex("""(\S+\s\d+(\.\d+)?)*""").matches(description)) return ""
+    if (description == "") return ""
+    val productsAndPrices = description.split("; ")
+    var max = -1.0
+    var maxProduct = ""
+    for (product in productsAndPrices) {
+        val prod = product.split(" ")
+        if (prod[1].toDouble() > max) {
+            max = prod[1].toDouble()
+            maxProduct = prod[0]
+        }
+    }
+    return maxProduct
+}
 
 /**
  * Сложная (6 баллов)
@@ -244,6 +276,14 @@ fun mostExpensive(description: String): String = TODO()
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int = TODO()
+/**{
+val romeToNumber = mapOf(
+"I" to 1, "IV" to 4, "V" to 5, "IX" to 9, "X" to 10, "XL" to 40, "L" to 50,
+"XC" to 90, "C" to 100, "CD" to 400, "D" to 500, "CM" to 900, "M" to 1000,
+)
+}
+ */
+
 /**
  * Очень сложная (7 баллов)
  *
