@@ -227,6 +227,8 @@ fun plusMinus(expression: String): Int = TODO()
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int = TODO()
+
+
 /**
  * Сложная (6 баллов)
  *
@@ -239,7 +241,7 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше нуля либо равны нулю.
  */
 fun mostExpensive(description: String): String {
-    if (!Regex("""[а-яА-Я]+ \d+(\.?\d*; [а-яА-Я]+ \d+\.?\d*)*""").matches(description)) return ""
+    if (!Regex("""[а-яА-Я]+ \d+\.?\d*(; [а-яА-Я]+ \d+\.?\d*)*""").matches(description)) return ""
     val productsAndPrices = description.split("; ")
     var max = -1.0
     var maxProduct = ""
