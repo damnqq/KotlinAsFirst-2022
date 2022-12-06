@@ -277,7 +277,6 @@ fun decimal(digits: List<Int>, base: Int): Int {
 fun decimalFromString(str: String, base: Int): Int {
     var ans = 0
     val digits = mutableListOf<String>()
-    val alf = "abcdefghijklmnopqrstuvwxyz"
     for (i in 0 until str.length) {
         if (str[i].isDigit()) {
             digits.add(str[i].toString())

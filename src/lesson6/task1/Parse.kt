@@ -2,8 +2,10 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
 import lesson4.task1.isPalindrome
 import ru.spbstu.wheels.defaultCompareTo
+import java.lang.StringBuilder
 import kotlin.math.max
 import kotlin.reflect.typeOf
 
@@ -80,7 +82,7 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    var ans = ""
+    val ans = StringBuilder()
     val months = mapOf(
         "января" to "01.", "февраля" to "02.",
         "марта" to "03.", "апреля" to "04.", "мая" to "05.",
@@ -101,10 +103,10 @@ fun dateStrToDigit(str: String): String {
             if (month2.containsKey(day) && month !in month2[day]!!) return ""
             if (day == 29 && (month == "февраля")
                 && !(year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) return ""
-            if (day in 0..9) ans += "0$day." else ans += "$day."
-            if (months.containsKey(month)) ans += months[month] else return ""
-            ans += year
-            return ans
+            ans.append("${twoDigitStr(day)}.")
+            if (months.containsKey(month)) ans.append(months[month]) else return ""
+            ans.append(year)
+            return ans.toString()
         } else return ""
     } catch (e: NumberFormatException) {
         return ""
@@ -125,7 +127,7 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    var ans = ""
+    val ans = StringBuilder()
     val months = mapOf(
         "01" to "января", "02" to "февраля",
         "03" to "марта", "04" to "апреля", "05" to "мая",
@@ -147,10 +149,10 @@ fun dateDigitToStr(digital: String): String {
             if (month2.containsKey(day) && month !in month2[day]!!) return ""
             if (day == 29 && (month == "февраля")
                 && !(year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) return ""
-            ans += "$day "
-            if (months.containsKey(parts[1])) ans += "$month " else return ""
-            ans += year
-            return ans
+            ans.append("$day ")
+            if (months.containsKey(parts[1])) ans.append("$month ") else return ""
+            ans.append(year)
+            return ans.toString()
         } else return ""
     } catch (e: NumberFormatException) {
         return ""
@@ -185,7 +187,10 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int = TODO()//{
+    //if (!jumps.matches(Regex(""""([-%]*[0-9]*\s?)*"""))) return -1
+
+//}
 
 
 /**
@@ -222,7 +227,6 @@ fun plusMinus(expression: String): Int = TODO()
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
 fun firstDuplicateIndex(str: String): Int = TODO()
-
 /**
  * Сложная (6 баллов)
  *
@@ -235,7 +239,7 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть больше нуля либо равны нулю.
  */
 fun mostExpensive(description: String): String {
-    if (description == "") return ""
+    if (!Regex("""[а-яА-Я]+ \d+\.?\d*(; [а-яА-Я]+ \d+\.\d)*""").matches(description)) return ""
     val productsAndPrices = description.split("; ")
     var max = -1.0
     var maxProduct = ""
@@ -261,13 +265,6 @@ fun mostExpensive(description: String): String {
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int = TODO()
-/**{
-val romeToNumber = mapOf(
-"I" to 1, "IV" to 4, "V" to 5, "IX" to 9, "X" to 10, "XL" to 40, "L" to 50,
-"XC" to 90, "C" to 100, "CD" to 400, "D" to 500, "CM" to 900, "M" to 1000,
-)
-}
- */
 
 /**
  * Очень сложная (7 баллов)

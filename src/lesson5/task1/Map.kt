@@ -130,14 +130,8 @@ fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
  *     -> a changes to mutableMapOf() aka becomes empty
  */
 fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
-    val keysToRemove = mutableListOf<String>()
-    for ((key_b, value_b) in b) {
-        for ((key_a, value_a) in a) {
-            if (key_b == key_a && value_b == value_a) keysToRemove.add(key_a)
-        }
-    }
-    for (keys in keysToRemove) {
-        a.remove(keys)
+    for ((keyB, valueB) in b) {
+        if (a[keyB] == valueB) a.remove(keyB)
     }
 }
 
@@ -148,13 +142,7 @@ fun subtractOf(a: MutableMap<String, String>, b: Map<String, String>) {
  * В выходном списке не должно быть повторяющихся элементов,
  * т. е. whoAreInBoth(listOf("Марат", "Семён, "Марат"), listOf("Марат", "Марат")) == listOf("Марат")
  */
-fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
-    val ans = mutableSetOf<String>()
-    for (name in a) {
-        if (name in b) ans.add(name)
-    }
-    return ans.toList()
-}
+fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.toSet().intersect(b.toSet()).toList()
 
 /**
  * Средняя (3 балла)
@@ -173,6 +161,8 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> {
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
+//mapOf("Emergency" to "112", "Fire department" to "01"),
+//mapOf("Emergency" to "911", "Police" to "02")
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
     val ans = mutableMapOf<String, String>()
     if (mapA.isEmpty()) ans.putAll(mapB)
@@ -186,7 +176,6 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
             }
             if (nameA == nameB && phoneNumberA == phoneNumberB) {
                 ans.put(nameA, phoneNumberA)
-                continue
             }
         }
     }
@@ -326,7 +315,7 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     val index = mutableMapOf<Int, Int>()
     for (i in 0 until list.size) {
-        if (list[i] in index) return Pair(index.get(list[i])!!, i)
+        if (list[i] in index) return Pair(index[list[i]]!!, i)
         index[number - list[i]] = i
     }
     return Pair(-1, -1)
