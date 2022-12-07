@@ -190,7 +190,7 @@ fun flattenPhoneNumber(phone: String): String = TODO()
 fun bestLongJump(jumps: String): Int {
     if (!Regex("""([0-9%-]+\s?)*""").matches(jumps) ||
         !Regex("""\d+""").containsMatchIn(jumps)) return -1
-    var maxJump = 0
+    var maxJump = -1
     val s = jumps.split(" ")
     for (jump in s) {
         if (Regex("""[0-9]*""").matches(jump)) {
@@ -212,7 +212,20 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    if (!Regex("""(\d+ [+%-]*\s?)*""").matches(jumps) || "+" !in jumps) return -1
+    val s = jumps.split(" ")
+    var maxJump = -1
+    for (i in s.indices) {
+        if (Regex("""\d+""").matches(s[i]) && "+" in s[i + 1]) {
+            if (s[i].toInt() > maxJump) maxJump = s[i].toInt()
+        }
+    }
+    return maxJump
+}
+// сплитнуть строку по пробелам и дальше пройтись по ней фором через индексы и проверять через регекс как в пред задаче
+// только тут будет jump[i] плюс добавить на проверку на jump[i + 1] == "+" или == "%+" или как бля я хз может
+// ты уже лучше знаешь утро вечера мудренее все-таки АЛЬХАМДУЛИЛЛЯ
 
 /**
  * Сложная (6 баллов)
