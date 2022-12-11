@@ -323,3 +323,39 @@ fun fromRoman(roman: String): Int = TODO()
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TODO()
+
+
+
+/**
+ fun myFun(movers: List<String>, pets: List<String>, limit: Int): Set<String> {
+    var money = limit
+    val petAndPriceMap = mutableMapOf<String, Int>()
+    val ans = mutableListOf<String>()
+    val map = mutableMapOf<String, MutableMap<String, Int>>()
+    for (j in movers) {
+        if (!Regex("""\S+: ([а-я]+ - \d+,?\s?)*""").matches(j)) throw IllegalArgumentException()
+    }
+    for (el in movers) {
+        val a = el.split(": ")
+        val b = a[1].split(", ")
+        val companyName = a[0]
+        for (c in b) {
+            val petAndPrice = c.split(" - ")
+            petAndPriceMap.put(petAndPrice[0], petAndPrice[1].toInt())
+        }
+        map.put(companyName, petAndPriceMap)
+    }
+    for ((name, pricesAndPets) in map) {
+        val f = mutableListOf<String>()
+        var curSum = 0
+        for ((key, value) in pricesAndPets) {
+            if (key in pets) {
+                curSum += value
+                f.add(key)
+            }
+        }
+         if (limit >= curSum && f == pets) ans.add(name)
+     }
+     return ans.toSet()
+ }
+ */

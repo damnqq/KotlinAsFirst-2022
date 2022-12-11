@@ -2,7 +2,9 @@
 
 package lesson7.task1
 
+import ru.spbstu.wheels.NullableMonad.filter
 import java.io.File
+import java.util.*
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -63,7 +65,17 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
+    for (line in File(inputName).readLines()) {
+        if (line.isEmpty()) {
+            writer.newLine()
+            writer.write("")
+            writer.newLine()
+        } else if (line[0].toString() != "_") {
+            writer.write(line)
+        }
+    }
+    writer.close()
 }
 
 /**
@@ -92,7 +104,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val writer = File(outputName).bufferedWriter()
 }
 
 /**
@@ -233,7 +245,41 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    TODO()
+    val wordSize = mutableMapOf<String, Int>()
+    val writer = File(outputName).bufferedWriter()
+    val longestWord = mutableListOf<String>()
+    fun isDifferent(word: String): Boolean {
+        var counter = 0
+        for (letter in word) {
+            for (i in word.indices) {
+                if (letter.lowercase() == word[i].lowercase()) counter++
+                if (counter > 1) return false
+            }
+            counter = 0
+        }
+        return true
+    }
+    for (word in File(inputName).readLines()) {
+        if (isDifferent(word)) wordSize[word] = word.length
+    }
+    var maxLength = -1
+    for ((key, value) in wordSize) {
+        if (value > maxLength) maxLength = value
+    }
+    for ((key, value) in wordSize) {
+        if (value == maxLength) longestWord.add(key)
+    }
+    if (longestWord.size == 0) writer.write("")
+    else {
+        for (word in longestWord) {
+            if (longestWord.size > 1) {
+                writer.write("$word, ")
+                longestWord.remove(word)
+            }
+        }
+        for (word in longestWord) writer.write(word)
+    }
+    writer.close()
 }
 
 /**
