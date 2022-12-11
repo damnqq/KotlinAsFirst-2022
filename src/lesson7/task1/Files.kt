@@ -77,9 +77,7 @@ fun deleteMarked(inputName: String, outputName: String) {
     }
     writer.close()
 }
-// e
-// --- hellohEllo BIBABOBA
-// ПОНЯТЬ КАК ПОСЧИТАТЬ -- В ---(-- ДОЛЖНО РАВНЯТЬСЯ 2) ПОКА ЧТО ПРОГА СЧИТАЕТ ЕГО КАК ОДИН
+
 /**
  * Средняя (14 баллов)
  *
@@ -89,6 +87,7 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
+
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO() /**{
     val ans = mutableMapOf<String, Int>()
     var count = 0
