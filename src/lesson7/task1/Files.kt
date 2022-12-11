@@ -68,11 +68,11 @@ fun deleteMarked(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
     for (line in File(inputName).readLines()) {
         if (line.isEmpty()) {
-            writer.newLine()
             writer.write("")
             writer.newLine()
         } else if (line[0].toString() != "_") {
             writer.write(line)
+            writer.newLine()
         }
     }
     writer.close()
@@ -104,7 +104,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    val writer = File(outputName).bufferedWriter()
+    TODO()
 }
 
 /**
