@@ -77,7 +77,9 @@ fun deleteMarked(inputName: String, outputName: String) {
     }
     writer.close()
 }
-
+// e
+// --- hellohEllo BIBABOBA
+// ПОНЯТЬ КАК ПОСЧИТАТЬ -- В ---(-- ДОЛЖНО РАВНЯТЬСЯ 2) ПОКА ЧТО ПРОГА СЧИТАЕТ ЕГО КАК ОДИН
 /**
  * Средняя (14 баллов)
  *
@@ -87,8 +89,23 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
-
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO() /**{
+    val ans = mutableMapOf<String, Int>()
+    var count = 0
+    fun counter(str: String, line: String): Int {
+        //return (lineCopy.length - lineCopy.replace(str, "").length) / str.length
+        return Regex(str).findAll(line).count()
+    }
+    for (str in substrings) {
+        for (line in File(inputName).readLines()) {
+            count += counter(str.lowercase(), line.lowercase())
+        }
+        ans[str] = count
+        count = 0
+    }
+    return ans
+}
+*/
 
 /**
  * Средняя (12 баллов)
@@ -271,13 +288,12 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     }
     if (longestWord.size == 0) writer.write("")
     else {
-        for (word in longestWord) {
-            if (longestWord.size > 1) {
-                writer.write("$word, ")
-                longestWord.remove(word)
-            }
+        val lastWord = longestWord.last()
+        longestWord.remove(lastWord)
+        for (i in longestWord.indices) {
+            writer.write("${longestWord[i]}, ")
         }
-        for (word in longestWord) writer.write(word)
+        writer.write(lastWord)
     }
     writer.close()
 }
