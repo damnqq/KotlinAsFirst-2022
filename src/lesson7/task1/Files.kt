@@ -2,9 +2,12 @@
 
 package lesson7.task1
 
-import ru.spbstu.wheels.NullableMonad.filter
 import java.io.File
 import java.util.*
+import java.util.function.IntPredicate
+import java.util.function.IntUnaryOperator
+import java.util.stream.IntStream
+
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -87,24 +90,29 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO() /**{
+//ee -> str
+//eeeжд -> line
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val ans = mutableMapOf<String, Int>()
     var count = 0
-    fun counter(str: String, line: String): Int {
-        //return (lineCopy.length - lineCopy.replace(str, "").length) / str.length
-        return Regex(str).findAll(line).count()
+    fun countCoincidence(str: String, line: String): Int {
+        var counter = 0
+        var firsIndex = line.indexOf(str)
+        while (firsIndex != -1) {
+            counter++
+            firsIndex = line.indexOf(str, firsIndex + 1)
+        }
+        return counter
     }
     for (str in substrings) {
         for (line in File(inputName).readLines()) {
-            count += counter(str.lowercase(), line.lowercase())
+            count += countCoincidence(str.lowercase(), line.lowercase())
         }
         ans[str] = count
         count = 0
     }
     return ans
 }
-*/
 
 /**
  * Средняя (12 баллов)
