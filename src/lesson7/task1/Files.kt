@@ -232,9 +232,22 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  *
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
-fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
+fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String)  {
     TODO()
+    /**
+    val writer = File(outputName).bufferedWriter()
+    for (line in File(inputName).readLines()) {
+        for (i in line.indices) {
+            for ((key, value) in dictionary) {
+                if (line[i] == key) line.replace(line[i].toString(), value)
+            }
+        }
+        writer.write(line)
+    }
+    writer.close()
+    */
 }
+
 
 /**
  * Средняя (12 баллов)

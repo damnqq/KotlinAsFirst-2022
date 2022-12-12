@@ -84,29 +84,29 @@ fun main() {
 fun dateStrToDigit(str: String): String {
     val ans = StringBuilder()
     val months = mapOf(
-        "января" to "01.", "февраля" to "02.",
-        "марта" to "03.", "апреля" to "04.", "мая" to "05.",
-        "июня" to "06.", "июля" to "07.",
-        "августа" to "08.",
-        "сентября" to "09.", "октября" to "10.", "ноября" to "11.", "декабря" to "12."
-    )
-    val month2 = mapOf(
-        31 to listOf("января", "марта", "мая", "июля", "августа", "октября", "декабря")
+        "января" to 1, "февраля" to 2,
+        "марта" to 3, "апреля" to 4, "мая" to 5,
+        "июня" to 6, "июля" to 7,
+        "августа" to 8,
+        "сентября" to 9, "октября" to 10, "ноября" to 11, "декабря" to 12
     )
     try {
         val parts = str.split(" ")
         val day = parts[0].toInt()
-        val month = parts[1]
-        val year = parts[2].toInt()
-        if (month == "февраля" && day > 29) return ""
-        if ((day <= 31)) {
-            if (month2.containsKey(day) && month !in month2[day]!!) return ""
-            if (day == 29 && (month == "февраля")
-                && !(year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) return ""
-            ans.append("${twoDigitStr(day)}.")
-            if (months.containsKey(month)) ans.append(months[month]) else return ""
-            ans.append(year)
-            return ans.toString()
+        if (months.containsKey(parts[1])) {
+            val month = months[parts[1]]
+            val year = parts[2].toInt()
+            if (day > daysInMonth(month!!, year)) return ""
+            else {
+                ans.append("${twoDigitStr(day)}.")
+                if (months.containsKey(parts[1])) {
+                    if (months[parts[1]]!! > 9) {
+                        ans.append("${months[parts[1]]}.")
+                    } else ans.append("0${months[parts[1]]}.")
+                } else return ""
+                ans.append(year)
+                return ans.toString()
+            }
         } else return ""
     } catch (e: NumberFormatException) {
         return ""
@@ -135,24 +135,21 @@ fun dateDigitToStr(digital: String): String {
         "08" to "августа",
         "09" to "сентября", "10" to "октября", "11" to "ноября", "12" to "декабря"
     )
-    val month2 = mapOf(
-        31 to listOf("января", "марта", "мая", "июля", "августа", "октября", "декабря")
-    )
     try {
         val parts = digital.split(".")
         val day = parts[0].toInt()
-        val month = months[parts[1]]
-        val year = parts[2].toInt()
-        if (parts.size > 3) return ""
-        if (month == "февраля" && day > 29) return ""
-        if ((day <= 31)) {
-            if (month2.containsKey(day) && month !in month2[day]!!) return ""
-            if (day == 29 && (month == "февраля")
-                && !(year % 4 == 0 && year % 100 != 0 || year % 400 == 0)) return ""
-            ans.append("$day ")
-            if (months.containsKey(parts[1])) ans.append("$month ") else return ""
-            ans.append(year)
-            return ans.toString()
+        if (months.containsKey(parts[1])) {
+            val month = months[parts[1]]
+            val monthInt = parts[1].toInt()
+            val year = parts[2].toInt()
+            if (parts.size > 3) return ""
+            if (day > daysInMonth(monthInt, year)) return ""
+            else {
+                ans.append("$day ")
+                if (months.containsKey(parts[1])) ans.append("$month ") else return ""
+                ans.append(year)
+                return ans.toString()
+            }
         } else return ""
     } catch (e: NumberFormatException) {
         return ""
