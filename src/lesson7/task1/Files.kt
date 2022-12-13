@@ -259,7 +259,6 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    val wordSize = mutableListOf<Pair<Int, String>>()
     val writer = File(outputName).bufferedWriter()
     val longestWord = mutableListOf<String>()
     var maxLength = -1
@@ -275,9 +274,12 @@ fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     longestWord.filter { it.length >= maxLength }
     if (longestWord.size == 0) writer.write("")
     else {
-        for (i in longestWord.indices - 1) {
-            writer.write("${longestWord[i]}, ${longestWord[i + 1]}")
+        val lastWord = longestWord.last()
+        longestWord.remove(lastWord)
+        for (i in longestWord.indices) {
+            writer.write("${longestWord[i]}, ")
         }
+        writer.write(lastWord)
     }
     writer.close()
 }
@@ -330,6 +332,7 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
     TODO()
 }
+
 
 /**
  * Сложная (23 балла)
