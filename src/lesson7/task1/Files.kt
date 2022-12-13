@@ -331,7 +331,6 @@ fun markdownToHtmlSimple(inputName: String, outputName: String) {
     TODO()
 }
 
-
 /**
  * Сложная (23 балла)
  *
