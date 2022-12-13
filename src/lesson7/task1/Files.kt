@@ -90,8 +90,7 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-//ee -> str
-//eeeжд -> line
+
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val ans = mutableMapOf<String, Int>()
     var count = 0
@@ -240,20 +239,8 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  *
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
-fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String)  {
+fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
     TODO()
-    /**
-    val writer = File(outputName).bufferedWriter()
-    for (line in File(inputName).readLines()) {
-        for (i in line.indices) {
-            for ((key, value) in dictionary) {
-                if (line[i] == key) line.replace(line[i].toString(), value)
-            }
-        }
-        writer.write(line)
-    }
-    writer.close()
-    */
 }
 
 
