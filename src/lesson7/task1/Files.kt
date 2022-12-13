@@ -259,38 +259,25 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
-    val wordSize = mutableListOf<Pair<String, Int>>()
+    val wordSize = mutableListOf<Pair<Int, String>>()
     val writer = File(outputName).bufferedWriter()
     val longestWord = mutableListOf<String>()
-    fun isDifferent(word: String): Boolean {
-        var counter = 0
-        for (letter in word) {
-            for (i in word.indices) {
-                if (letter.lowercase() == word[i].lowercase()) counter++
-                if (counter > 1) return false
-            }
-            counter = 0
-        }
-        return true
-    }
-    for (word in File(inputName).readLines()) {
-        if (isDifferent(word)) wordSize.add(Pair(word, word.length))
-    }
     var maxLength = -1
-    for ((key, value) in wordSize) {
-        if (value > maxLength) maxLength = value
+    fun isDifferent(word: String): Boolean = word.lowercase().toSet().size == word.lowercase().length
+    for (word in File(inputName).readLines()) {
+        if (isDifferent(word)) {
+            if (word.length >= maxLength) {
+                maxLength = word.length
+                longestWord.add(word)
+            }
+        }
     }
-    for ((key, value) in wordSize) {
-        if (value == maxLength) longestWord.add(key)
-    }
+    longestWord.filter { it.length >= maxLength }
     if (longestWord.size == 0) writer.write("")
     else {
-        val lastWord = longestWord.last()
-        longestWord.remove(lastWord)
-        for (i in longestWord.indices) {
-            writer.write("${longestWord[i]}, ")
+        for (i in longestWord.indices - 1) {
+            writer.write("${longestWord[i]}, ${longestWord[i + 1]}")
         }
-        writer.write(lastWord)
     }
     writer.close()
 }
@@ -343,6 +330,7 @@ Suspendisse ~~et elit in enim tempus iaculis~~.
 fun markdownToHtmlSimple(inputName: String, outputName: String) {
     TODO()
 }
+
 
 /**
  * Сложная (23 балла)
