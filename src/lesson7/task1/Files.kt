@@ -260,24 +260,25 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
-    val longestWord = mutableListOf<String>()
+    val words = mutableListOf<String>()
+    var b = mutableListOf<String>()
     var maxLength = -1
     fun isDifferent(word: String): Boolean = word.lowercase().toSet().size == word.lowercase().length
     for (word in File(inputName).readLines()) {
         if (isDifferent(word)) {
             if (word.length >= maxLength) {
                 maxLength = word.length
-                longestWord.add(word)
+                words.add(word)
             }
         }
     }
-    longestWord.filter { it.length >= maxLength }
-    if (longestWord.size == 0) writer.write("")
+    b = words.filter { it.length >= maxLength }.toMutableList()
+    if (b.size == 0) writer.write("")
     else {
-        val lastWord = longestWord.last()
-        longestWord.remove(lastWord)
-        for (i in longestWord.indices) {
-            writer.write("${longestWord[i]}, ")
+        val lastWord = b.last()
+        b.remove(lastWord)
+        for (i in b.indices) {
+            writer.write("${b[i]}, ")
         }
         writer.write(lastWord)
     }
