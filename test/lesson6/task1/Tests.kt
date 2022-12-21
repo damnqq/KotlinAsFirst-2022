@@ -150,40 +150,28 @@ class Tests {
         assertThrows(IllegalArgumentException::class.java) { computeDeviceCells(10, "+>+>[+>", 3) }
         assertThrows(IllegalStateException::class.java) { computeDeviceCells(20, ">>>>>>>>>>>>>", 12) }
     }
-}
 /**
-@Test
-fun myFun() {
-assertEquals(
-listOf("Lux", "FastAndCheap"),
-myFun(
-listOf(
-"SuperCats: кот - 100000", "FastAndCheap: кот - 25000, собака - 30000, шиншилла - 5000",
-"Lux: кот - 1000000, собака - 1000000, крыса - 1000000, корова - 1000000, бегемот - 1000000"
-),
-listOf("кот", "собака"), 20000000,
-)
-)
-assertEquals(
-listOf("FastAndCheap"),
-myFun(
-listOf(
-"SuperCats: кот - 100000", "FastAndCheap: кот - 25000, собака - 30000, шиншилла - 5000",
-"Lux: кот - 1000000, собака - 1000000, крыса - 1000000, корова - 1000000, бегемот - 1000000"
-),
-listOf("кот"), 25000
-)
-)
-assertEquals(
-listOf<String>(),
-myFun(
-listOf(
-"SuperCats: кот - 100000", "FastAndCheap: кот - 25000, собака - 30000, шиншилла - 5000",
-"Lux: кот - 1000000, собака - 1000000, крыса - 1000000, корова - 1000000, бегемот - 1000000"
-),
-listOf("бегемот"), 500000
-)
-)
+    @Test
+    fun myFun() {
+        assertEquals(
+            listOf("Зенит", "Спартак", "Динамо", "ЦСКА"),
+            myFun(
+                "Зенит 0:1 Спартак; Зенит 1:0 ЦСКА; Барнаулец 0:2 Зенит; Подмосквич 4:4 Барнаулец",
+                listOf("Зенит", "Спартак", "Динамо", "ЦСКА"),
+            ),
+        )
+        assertThrows(java.lang.IllegalArgumentException::class.java) {
+            myFun(
+                "Зенит//// 6:0 Спартак",
+                listOf("динамо")
+            )
+        }
+        assertEquals(
+            listOf("Динамо", "Зенит", "ЦСКА"),
+            myFun(
+                "Динамо 3:0 Зенит; Спартак 5:2 Барселона; Динамо 0:1 Москвич", listOf("Динамо", "Зенит", "ЦСКА")
+            ),
+        )
+    }
+    */
 }
-}
- */

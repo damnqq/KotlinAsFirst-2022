@@ -82,6 +82,7 @@ fun deleteMarked(inputName: String, outputName: String) {
  */
 
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val strings = File(inputName).readLines()
     val ans = mutableMapOf<String, Int>()
     var count = 0
     fun countCoincidence(str: String, line: String): Int {
@@ -94,7 +95,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
         return counter
     }
     for (str in substrings) {
-        for (line in File(inputName).readLines()) {
+        for (line in strings) {
             count += countCoincidence(str.lowercase(), line.lowercase())
         }
         ans[str] = count
@@ -260,28 +261,21 @@ fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: 
  */
 fun chooseLongestChaoticWord(inputName: String, outputName: String) {
     val writer = File(outputName).bufferedWriter()
+    val strings = File(inputName).readLines()
     val words = mutableListOf<String>()
-    var b = mutableListOf<String>()
     var maxLength = -1
-    fun isDifferent(word: String): Boolean = word.lowercase().toSet().size == word.lowercase().length
-    for (word in File(inputName).readLines()) {
+    fun isDifferent(word: String): Boolean = word.lowercase().toSet().size == word.length
+    for (word in strings) {
         if (isDifferent(word)) {
             if (word.length >= maxLength) {
                 maxLength = word.length
                 words.add(word)
+                words.removeIf { it.length < maxLength }
             }
         }
     }
-    b = words.filter { it.length >= maxLength }.toMutableList()
-    if (b.size == 0) writer.write("")
-    else {
-        val lastWord = b.last()
-        b.remove(lastWord)
-        for (i in b.indices) {
-            writer.write("${b[i]}, ")
-        }
-        writer.write(lastWord)
-    }
+    if (words.size == 0) writer.write("")
+    else writer.write(words.joinToString())
     writer.close()
 }
 

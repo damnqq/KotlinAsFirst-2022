@@ -5,6 +5,8 @@ package lesson6.task1
 import lesson2.task2.daysInMonth
 import lesson4.task1.isPalindrome
 import ru.spbstu.wheels.defaultCompareTo
+import java.lang.IllegalArgumentException
+import java.lang.IllegalStateException
 import java.lang.StringBuilder
 import kotlin.math.max
 import kotlin.reflect.typeOf
@@ -93,21 +95,13 @@ fun dateStrToDigit(str: String): String {
     try {
         val parts = str.split(" ")
         val day = parts[0].toInt()
-        if (months.containsKey(parts[1])) {
+        return if (months.containsKey(parts[1])) {
             val month = months[parts[1]]
             val year = parts[2].toInt()
             if (day > daysInMonth(month!!, year)) return ""
-            else {
-                ans.append("${twoDigitStr(day)}.")
-                if (months.containsKey(parts[1])) {
-                    if (months[parts[1]]!! > 9) {
-                        ans.append("${months[parts[1]]}.")
-                    } else ans.append("0${months[parts[1]]}.")
-                } else return ""
-                ans.append(year)
-                return ans.toString()
-            }
-        } else return ""
+            ans.append("${twoDigitStr(day)}." + twoDigitStr(months[parts[1]]!!) + "." + year)
+            ans.toString()
+        } else ""
     } catch (e: NumberFormatException) {
         return ""
     } catch (e: IndexOutOfBoundsException) {
@@ -323,36 +317,73 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> = TO
 
 
 
+
+
 /**
- fun myFun(movers: List<String>, pets: List<String>, limit: Int): Set<String> {
-    var money = limit
-    val petAndPriceMap = mutableMapOf<String, Int>()
+//зенит - 3,
+fun myFun(text: String, teams: List<String>): List<String> {
+    if (!Regex("""([a-zA-Zа-яА-я0-9]+ \d+:\d+ [a-zA-Zа-яА-я0-9]+;?\s?)*""").matches(text))
+        throw IllegalArgumentException()
     val ans = mutableListOf<String>()
-    val map = mutableMapOf<String, MutableMap<String, Int>>()
-    for (j in movers) {
-        if (!Regex("""\S+: ([а-я]+ - \d+,?\s?)*""").matches(j)) throw IllegalArgumentException()
-    }
-    for (el in movers) {
-        val a = el.split(": ")
-        val b = a[1].split(", ")
-        val companyName = a[0]
-        for (c in b) {
-            val petAndPrice = c.split(" - ")
-            petAndPriceMap.put(petAndPrice[0], petAndPrice[1].toInt())
+    val map = mutableMapOf<String, List<Int>>()
+    val spisok = text.split("; ")
+    val list1Team = mutableListOf<Int>()
+    val list2Team = mutableListOf<Int>()
+    for (el in spisok) {
+        val a = el.split(":")
+        val b = a[0].split(" ")
+        val team1Name = b[0]
+        val goalsTeam1 = b[1].toInt()
+        val c = a[1].split(" ")
+        val team2name = c[1]
+        val goalsTeam2 = c[0].toInt()
+        if (goalsTeam1 > goalsTeam2) {
+            list1Team.add(3)
+            map[team1Name] = list1Team
+            map[team2name] = list2Team
         }
-        map.put(companyName, petAndPriceMap)
+        if (goalsTeam1 == goalsTeam2) {
+            list1Team.add(1)
+            list2Team.add(1)
+            map[team1Name] = list1Team
+            map[team2name] = list2Team
+        }
+        if (goalsTeam2 > goalsTeam1) {
+            list2Team.add(3)
+            map[team2name] = list2Team
+            map[team1Name] = list2Team
+        }
     }
-    for ((name, pricesAndPets) in map) {
-        val f = mutableListOf<String>()
-        var curSum = 0
-        for ((key, value) in pricesAndPets) {
-            if (key in pets) {
-                curSum += value
-                f.add(key)
+    val f = mutableMapOf<String, Int>()
+    for (team in teams) {
+        for ((key, value) in map) {
+            if (team == key) {
+                f[team] = value.sum()
             }
         }
-         if (limit >= curSum && f == pets) ans.add(name)
-     }
-     return ans.toSet()
- }
- */
+        if (!map.containsKey(team)) f[team] = 0
+    }
+    /**
+    f.toList().sortedBy { (key, value) -> value }.reversed()
+    for ((key, value) in f) {
+        ans.add(key)
+    }
+    return ans
+    */
+
+    var c = -1
+    while (f.isNotEmpty()) {
+        for ((key, value) in f) {
+            if (value >= c) c = value
+        }
+        for ((key, value) in f) {
+            if (f[key] == c) {
+                ans.add(key)
+                f.remove(key)
+            }
+        }
+        c = -1
+    }
+    return ans
+}
+*/
